@@ -23,11 +23,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "genre TEXT," +
             "image TEXT," +
             "synopsis TEXT," +
-            "video TEXT,"+
-            "viewed INTEGER,"+
-            "liked INTEGER,"+
-            "disliked INTEGER,"+
-            "addedToList INTEGER"+
+            "video TEXT," +
+            "viewed INTEGER," +
+            "liked INTEGER," +
+            "disliked INTEGER," +
+            "addedToList INTEGER" +
             ")";
 
     public static final String DATABASE_CREATE_TABLE_INFO = "CREATE TABLE InfoUser (" +
@@ -37,14 +37,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ")";
 
 
-    public DatabaseHelper(Context context){
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-            db.execSQL(DATABASE_CREATE_TABLE_INFO);
-            db.execSQL(DATABASE_CREATE_TABLE_TVSHOW);
+        db.execSQL(DATABASE_CREATE_TABLE_INFO);
+        db.execSQL(DATABASE_CREATE_TABLE_TVSHOW);
     }
 
     private boolean doDBCheck() {
@@ -64,7 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             TVShow currentTVShow = TVShowList.get(i);
 
             //INSERT SQLite
-            ContentValues values  = new ContentValues();
+            ContentValues values = new ContentValues();
             values.put("name", currentTVShow.getName());
             values.put("genre", currentTVShow.getGenreToString());
             values.put("image", currentTVShow.getImage());
@@ -83,7 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (int i = this.selectAllGenre(db).length; genres.length > i; i++) {
 
             //INSERT SQLite
-            ContentValues values  = new ContentValues();
+            ContentValues values = new ContentValues();
             values.put("genre", genres[i]);
             values.put("value", 0);
 
@@ -120,18 +120,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return genresFromDatabase;
     }
 
-    public void updateTVShow(String newValue, int id, String champ, SQLiteDatabase db){
-            //Update SQLite
-            ContentValues values = new ContentValues();
-            values.put(champ, newValue);
-            db.update(TABLE_NAME_TVSHOW, values, "_id = ?", new String[]{String.valueOf(id)});
+    public void updateTVShow(String newValue, int id, String champ, SQLiteDatabase db) {
+        //Update SQLite
+        ContentValues values = new ContentValues();
+        values.put(champ, newValue);
+        db.update(TABLE_NAME_TVSHOW, values, "_id = ?", new String[]{String.valueOf(id)});
     }
 
-    public void updateTVShowInt(int newValue, int id, String champ, SQLiteDatabase db){
-            //Update SQLite
-            ContentValues values = new ContentValues();
-            values.put(champ, newValue);
-            db.update(TABLE_NAME_TVSHOW, values, "_id = ?", new String[]{String.valueOf(id)});
+    public void updateTVShowInt(int newValue, int id, String champ, SQLiteDatabase db) {
+        //Update SQLite
+        ContentValues values = new ContentValues();
+        values.put(champ, newValue);
+        db.update(TABLE_NAME_TVSHOW, values, "_id = ?", new String[]{String.valueOf(id)});
     }
 
     public void updateListTVShow(List<TVShow> tvShows, SQLiteDatabase db) {
@@ -145,7 +145,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put("synopsis", currentTVShow.getSynopsis());
             values.put("video", currentTVShow.getVideo());
 
-            db.update(TABLE_NAME_TVSHOW, values, "_id = ?", new String[]{String.valueOf(i+1)});
+            db.update(TABLE_NAME_TVSHOW, values, "_id = ?", new String[]{String.valueOf(i + 1)});
         }
     }
 
@@ -155,7 +155,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             values.put("genre", genres[i]);
 
-            db.update(TABLE_NAME_INFO, values, "_id = ?", new String[]{String.valueOf(i+1)});
+            db.update(TABLE_NAME_INFO, values, "_id = ?", new String[]{String.valueOf(i + 1)});
         }
     }
 
@@ -213,15 +213,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void updateValueFromGenre(int valueToAdd, String genre,SQLiteDatabase db) {
+    public void updateValueFromGenre(int valueToAdd,boolean soustraction, String genre, SQLiteDatabase db) {
         int actualvalue = this.getValueFromGenre(db, genre);
         Log.e("TViscovery", String.valueOf(actualvalue));
         ContentValues values = new ContentValues();
-        values.put("value", actualvalue + valueToAdd);
+        if (!soustraction)
+            values.put("value", actualvalue + valueToAdd);
+        else
+            values.put("value", actualvalue - valueToAdd);
+
         db.update(TABLE_NAME_INFO, values, "genre = ?", new String[]{genre});
     }
 
-    private int getValueFromGenre(SQLiteDatabase database,String genre) {
+    private int getValueFromGenre(SQLiteDatabase database, String genre) {
         Cursor cursor = database.query(
                 TABLE_NAME_INFO, //Argument de la table
                 new String[]{"value"},

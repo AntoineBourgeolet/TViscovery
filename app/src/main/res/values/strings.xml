@@ -2,6 +2,6 @@
     <string name="app_name">TViscovery</string>
     <string name="interess">Interessé</string>
     <string name="j_aime">J\'aime</string>
-    <string name="je_ne_sais_pas">Je ne sais pas</string>
+    <string name="je_ne_sais_pas">Pas interessé</string>
     <string name="j_aime_pas">J\'aime pas</string>
 </resources>

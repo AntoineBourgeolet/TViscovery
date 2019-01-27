@@ -62,13 +62,49 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     for (String genre:tvShowSelected.getGenre())
                     {
-                        databaseHelper.updateValueFromGenre(3,genre,database);
+                        databaseHelper.updateValueFromGenre(3,false,genre,database);
                     }
                     databaseHelper.updateTVShowInt(1,tvShowSelected.getId(),"viewed",database);
                     databaseHelper.updateTVShowInt(1,tvShowSelected.getId(),"liked",database);
                     displayATVShow();
                 }
             });
+            dislikeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (String genre:tvShowSelected.getGenre())
+                    {
+                        databaseHelper.updateValueFromGenre(3,true,genre,database);
+                    }
+                    databaseHelper.updateTVShowInt(1,tvShowSelected.getId(),"viewed",database);
+                    databaseHelper.updateTVShowInt(1,tvShowSelected.getId(),"disliked",database);
+                    displayATVShow();
+                }
+            });
+            interestedButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (String genre:tvShowSelected.getGenre())
+                    {
+                        databaseHelper.updateValueFromGenre(1,false,genre,database);
+                    }
+                    databaseHelper.updateTVShowInt(1,tvShowSelected.getId(),"viewed",database);
+                    databaseHelper.updateTVShowInt(1,tvShowSelected.getId(),"addedToList",database);
+                    displayATVShow();
+                }
+            });
+            skipButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (String genre:tvShowSelected.getGenre())
+                    {
+                        databaseHelper.updateValueFromGenre(1,true,genre,database);
+                    }
+                    databaseHelper.updateTVShowInt(1,tvShowSelected.getId(),"viewed",database);
+                    displayATVShow();
+                }
+            });
+
         }else{
             nameTextView.setText("Fini");
         }
