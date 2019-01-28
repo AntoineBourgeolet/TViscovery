@@ -53,7 +53,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="30"
+        android:layout_weight="25"
         android:orientation="horizontal">
 
         <TextView
@@ -67,37 +67,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_weight="15"
         android:orientation="horizontal"
         android:weightSum="100">
 
-        <Button
+        <ImageButton
             android:id="@+id/likeButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="25"
-            android:text="@string/j_aime" />
+            android:background="@null"
+            android:src="@drawable/like" />
 
-        <Button
+        <ImageButton
             android:id="@+id/interestedButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="25"
-            android:text="@string/interess" />
+            android:background="@null"
+            android:src="@drawable/add" />
 
-        <Button
+        <ImageButton
             android:id="@+id/skipButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="25"
-            android:text="@string/je_ne_sais_pas" />
+            android:background="@null"
+            android:src="@drawable/skip" />
 
-        <Button
+        <ImageButton
             android:id="@+id/dislikeButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="25"
-            android:text="@string/j_aime_pas" />
+            android:background="@null"
+            android:src="@drawable/dislike" />
+
     </LinearLayout>
 
 </LinearLayout>

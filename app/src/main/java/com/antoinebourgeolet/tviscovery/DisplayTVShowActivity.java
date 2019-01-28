@@ -5,11 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,10 +25,10 @@ import java.util.Random;
 
 public class DisplayTVShowActivity extends AppCompatActivity {
 
-    Button likeButton;
-    Button interestedButton;
-    Button skipButton;
-    Button dislikeButton;
+    ImageButton likeButton;
+    ImageButton interestedButton;
+    ImageButton skipButton;
+    ImageButton dislikeButton;
 
     TextView nameTextView;
     TextView synopsisTextView;
@@ -232,7 +234,7 @@ public class DisplayTVShowActivity extends AppCompatActivity {
             do{
 
                 Random r = new Random();
-                int i = 0 + r.nextInt(tvShows.length - 0);
+                int i = 0 + r.nextInt(tvShows.length);
                 if ( !tvShows[i].getViewed()){
                     Log.d("TViscovery","Alea");
                     tvShowSelectionned = tvShows[i];
