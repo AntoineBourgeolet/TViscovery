@@ -13,6 +13,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
@@ -25,16 +28,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class DisplayTVShowActivity extends AppCompatActivity {
 
-    ImageButton likeButton;
-    ImageButton interestedButton;
-    ImageButton skipButton;
-    ImageButton dislikeButton;
+    MaterialButton likeButton;
+    MaterialButton interestedButton;
+    MaterialButton skipButton;
+    MaterialButton dislikeButton;
 
     TextView nameTextView;
     TextView synopsisTextView;
     TextView genreTextView;
 
     ImageView imageView;
+
+    FloatingActionButton playButton;
 
     View mainDisplayShowLayout;
 
@@ -262,6 +267,8 @@ public class DisplayTVShowActivity extends AppCompatActivity {
         genreTextView = findViewById(R.id.genreTextView);
 
         imageView = findViewById(R.id.imageView);
+
+        playButton = findViewById(R.id.playButton);
 
         mainDisplayShowLayout = findViewById(R.id.mainDisplayShowLayout);
     }

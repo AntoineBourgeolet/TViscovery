@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainDisplayShowLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="100"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context=".DisplayTVShowActivity">
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="50"
+        android:layout_height="400dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -23,12 +19,15 @@
             android:cropToPadding="true"
             android:scaleType="centerCrop"
             tools:srcCompat="@tools:sample/avatars" />
+
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7"
+        android:layout_height="100dp"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/text_grad"
         android:orientation="horizontal">
 
         <TextView
@@ -36,32 +35,60 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@android:color/background_light"
             android:text="Titre"
-            android:gravity="center"
-            android:textSize="24sp"
+            android:gravity="bottom"
+            android:textSize="22sp"
             android:textStyle="bold" />
+
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
+        android:layout_height="90dp"
+        android:layout_marginTop="370dp"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/playButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/gray"
+            app:borderWidth="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:srcCompat="@android:drawable/ic_media_play" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="460dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/genreTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:textColor="@color/gray"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="start"
             android:text="Genre"
             android:textStyle="italic" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="25"
+        android:layout_height="140dp"
+        android:layout_marginTop="480dp"
         android:orientation="horizontal"
         android:gravity="bottom">
 
@@ -74,13 +101,13 @@
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
             android:text="Synopsis"
-            android:textAlignment="center" />
+            android:textAlignment="textStart" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="12"
+        android:layout_height="100dp"
+        android:layout_marginTop="640dp"
         android:orientation="horizontal"
         android:weightSum="100">
 
@@ -90,14 +117,18 @@
             android:layout_weight="25"
             android:orientation="vertical">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/likeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                app:backgroundTint="@null"
+                app:iconTint="@color/like"
                 android:layout_gravity="center"
-                android:layout_margin="16dp"
-                app:backgroundTint="@android:color/background_light"
-                app:srcCompat="@drawable/round_thumb_up_white_36" />
+                android:gravity="center"
+                app:icon="@drawable/round_thumb_up_black_48" />
         </LinearLayout>
 
         <LinearLayout
@@ -106,14 +137,17 @@
             android:layout_weight="25"
             android:orientation="vertical">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/interestedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                app:backgroundTint="@null"
+                app:iconTint="@color/gray"
                 android:layout_gravity="center"
-                app:backgroundTint="@android:color/holo_blue_light"
-                android:layout_margin="16dp"
-                app:srcCompat="@drawable/round_add_white_36" />
+                app:icon="@drawable/round_add_black_48" />
         </LinearLayout>
 
         <LinearLayout
@@ -122,14 +156,17 @@
             android:layout_weight="25"
             android:orientation="vertical">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/skipButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                app:backgroundTint="@null"
+                app:iconTint="@color/gray"
                 android:layout_gravity="center"
-                app:backgroundTint="@android:color/holo_red_light"
-                android:layout_margin="16dp"
-                app:srcCompat="@drawable/round_skip_next_white_36" />
+                app:icon="@drawable/round_clear_black_48" />
         </LinearLayout>
 
 
@@ -139,17 +176,21 @@
             android:layout_weight="25"
             android:orientation="vertical">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/dislikeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                app:backgroundTint="@null"
+                app:iconTint="@color/dislike"
                 android:layout_gravity="center"
-                app:backgroundTint="@android:color/holo_red_dark"
-                android:layout_margin="16dp"
-                app:srcCompat="@drawable/round_thumb_down_white_36" />
+                app:icon="@drawable/round_thumb_down_black_48" />
         </LinearLayout>
 
 
     </LinearLayout>
 
-</LinearLayout>
+
+</RelativeLayout>
