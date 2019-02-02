@@ -119,8 +119,9 @@ public class DisplayTVShowActivity extends AppCompatActivity {
             playButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent displayTVShowActivityIntent = new Intent(playButton.getContext(), YoutubePlayerActivity.class);
-                    startActivity(displayTVShowActivityIntent);
+                    Intent displayYoutubeVideo = new Intent(playButton.getContext(), YoutubePlayerActivity.class);
+                    displayYoutubeVideo.putExtra("video",tvShowSelected.getVideo());
+                    startActivity(displayYoutubeVideo);
                 }
             });
 

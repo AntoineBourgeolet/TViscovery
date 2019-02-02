@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#FF5722</color>
+    <color name="colorPrimaryDark">#FF5722</color>
     <color name="colorAccent">#A02A2A</color>
     <color name="topBackground">#242222</color>
     <color name="gray">#636363</color>
     <color name="genre">#FFFFFF</color>
-    <color name="like">#1565C0</color>
-    <color name="dislike">#C62828</color>
+    <color name="like">#0D47A1</color>
+    <color name="dislike">#B71C1C</color>
     <color name="play">#FFFFFF</color>
+    <color name="backgroundButton">#ECECEC</color>
 </resources>
