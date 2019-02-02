@@ -1,26 +1,20 @@
 package com.antoinebourgeolet.tviscovery;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -28,10 +22,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class DisplayTVShowActivity extends AppCompatActivity {
 
-    MaterialButton likeButton;
-    MaterialButton interestedButton;
-    MaterialButton skipButton;
-    MaterialButton dislikeButton;
+    ImageView likeButton;
+    ImageView interestedButton;
+    ImageView skipButton;
+    ImageView dislikeButton;
 
     TextView nameTextView;
     TextView synopsisTextView;
@@ -39,9 +33,12 @@ public class DisplayTVShowActivity extends AppCompatActivity {
 
     ImageView imageView;
 
+    LinearLayout imageLayout;
+
     FloatingActionButton playButton;
 
     View mainDisplayShowLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +54,15 @@ public class DisplayTVShowActivity extends AppCompatActivity {
         final TVShow tvShowSelected = chooseATVShow();
         if(tvShowSelected.getName() != "noMoreTVShow"){
             nameTextView.setText(tvShowSelected.getName());
-            synopsisTextView.setText(tvShowSelected.getSynopsis());
-            genreTextView.setText(tvShowSelected.getGenreToString());
+            Log.d("TViscovery", String.valueOf(tvShowSelected.getSynopsis().length()));
+            if (tvShowSelected.getSynopsis().length() > 320){
+                Log.d("TViscovery","Long synopsis");
+                synopsisTextView.setText(String.format("%s...", tvShowSelected.getSynopsis().substring(0, 320)));
+            }else{
+                Log.d("TViscovery","Short synopsis");
+                synopsisTextView.setText(tvShowSelected.getSynopsis());
+            }
+            genreTextView.setText(tvShowSelected.getGenreForDisplay());
 
             new DownloadImageTask(imageView).execute(tvShowSelected.getImage());
 
@@ -109,6 +113,14 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                     }
                     databaseHelper.updateTVShowInt(1,tvShowSelected.getId(),"viewed",database);
                     displayATVShow();
+                }
+            });
+
+            playButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent displayTVShowActivityIntent = new Intent(playButton.getContext(), YoutubePlayerActivity.class);
+                    startActivity(displayTVShowActivityIntent);
                 }
             });
 
@@ -271,6 +283,11 @@ public class DisplayTVShowActivity extends AppCompatActivity {
         playButton = findViewById(R.id.playButton);
 
         mainDisplayShowLayout = findViewById(R.id.mainDisplayShowLayout);
+
+        imageLayout = findViewById(R.id.imageLayout);
+
+
+
     }
 
 

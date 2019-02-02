@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("TViscovery", String.valueOf(genres[0].getGenre()));
 
                         String messageInfo = "Mise à jour correctement effectué";
+                        database.close();
                         infoTextView.setText(messageInfo);
                         progressBar.setVisibility(View.INVISIBLE);
                         startButton.setEnabled(true);

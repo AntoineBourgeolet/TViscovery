@@ -79,6 +79,17 @@ class TVShow {
         return strGenre;
     }
 
+    public String getGenreForDisplay() {
+        String strGenre = "";
+        for (String value : genre) {
+            if (strGenre.isEmpty())
+                strGenre = value;
+            else
+                strGenre += " - " + value;
+        }
+        return strGenre;
+    }
+
     public int getId() {
         return id;
     }
