@@ -86,8 +86,9 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/backButton"
-            android:layout_width="40dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@null"
             android:clickable="true"
             android:focusable="true"
@@ -99,23 +100,38 @@
 
         <TextView
             android:id="@+id/genreTextView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="5"
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
-            android:layout_marginEnd="40dp"
             android:fontFamily="@font/roboto"
             android:text="@string/genre"
             android:gravity="center_vertical"
             android:textAlignment="center"
             android:textColor="@color/genre"
             android:textStyle="bold|italic" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/infoButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="10dp"
+            android:layout_marginEnd="10dp"
+            android:scaleType="centerCrop"
+            android:tint="@color/genre"
+            app:srcCompat="@drawable/baseline_info_white_48" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="430dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="110dp"
         android:orientation="horizontal">
 
         <TextView
@@ -135,7 +151,7 @@
     <LinearLayout
         android:id="@+id/buttonLayout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
         android:orientation="horizontal"
@@ -228,6 +244,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:fontFamily="@font/roboto"
+        android:textColor="@android:color/white"
         android:gravity="center"
         android:text="@string/vous_avez_vu_tout_le_contenu_revenez_plus_tard_pour_avoir_des_nouveaut_s"
         android:textAlignment="center"
@@ -237,11 +254,11 @@
     <ImageView
         android:id="@+id/logoImageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_marginTop="70dp"
-        app:srcCompat="@mipmap/logo_launcher_round"
+        android:contentDescription="@string/logo"
         android:visibility="invisible"
-        android:contentDescription="@string/logo" />
+        app:srcCompat="@drawable/logo" />
 
 
 </RelativeLayout>

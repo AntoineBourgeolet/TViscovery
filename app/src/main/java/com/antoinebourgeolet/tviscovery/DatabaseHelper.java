@@ -290,4 +290,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return personnesFromDatabase;
     }
+
+    public void reset(SQLiteDatabase database) {
+        database.delete(TABLE_NAME_TVSHOW,null,null);
+        database.delete(TABLE_NAME_INFO,null,null);
+    }
 }

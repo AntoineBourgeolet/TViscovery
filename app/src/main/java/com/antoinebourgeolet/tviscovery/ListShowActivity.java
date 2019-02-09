@@ -1,16 +1,21 @@
 package com.antoinebourgeolet.tviscovery;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ListShowActivity extends AppCompatActivity {
 
+    TextView emptyText;
     ListView listView;
-
+    ImageView backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +26,8 @@ public class ListShowActivity extends AppCompatActivity {
     }
     private void initiateLayouts(){
         listView = findViewById(R.id.listView);
+        backButton = findViewById(R.id.backButton);
+        emptyText = findViewById(R.id.emptyText);
     }
 
     private void behaviorViews(){
@@ -49,5 +56,17 @@ public class ListShowActivity extends AppCompatActivity {
         On ajoute notre comportement à notre ListView
          */
         listView.setAdapter(listViewAdapter);
+        if(listView.getCount() == 0){
+            emptyText.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
+        }
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent displayMenu = new Intent(listView.getContext(), MenuActivity.class);
+                startActivity(displayMenu);
+            }
+        });
     }
 }

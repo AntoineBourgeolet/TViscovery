@@ -15,4 +15,5 @@
     <string name="c_est_partie">Découvrir</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="title_activity_list_show">ListShowActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
 </resources>

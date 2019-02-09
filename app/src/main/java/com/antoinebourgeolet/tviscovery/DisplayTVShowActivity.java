@@ -1,5 +1,7 @@
 package com.antoinebourgeolet.tviscovery;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -8,10 +10,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -29,6 +35,7 @@ public class DisplayTVShowActivity extends AppCompatActivity {
     ImageView skipButton;
     ImageView dislikeButton;
     ImageView backButton;
+    ImageView infoButton;
 
     TextView nameTextView;
     TextView synopsisTextView;
@@ -48,6 +55,7 @@ public class DisplayTVShowActivity extends AppCompatActivity {
 
     View mainDisplayShowLayout;
 
+    static String howGenerate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,35 @@ public class DisplayTVShowActivity extends AppCompatActivity {
 
         displayATVShow();
     }
+
+
+    private void initialiseLayouts() {
+        likeButton = findViewById(R.id.likeButton);
+        interestedButton = findViewById(R.id.interestedButton);
+        skipButton = findViewById(R.id.skipButton);
+        dislikeButton = findViewById(R.id.dislikeButton);
+        backButton = findViewById(R.id.backButton);
+        infoButton = findViewById(R.id.infoButton);
+
+        nameTextView = findViewById(R.id.nameTextView);
+        synopsisTextView = findViewById(R.id.synopsisTextView);
+        genreTextView = findViewById(R.id.genreTextView);
+        endTextView = findViewById(R.id.endTextView);
+        imageView = findViewById(R.id.imageView);
+
+        playButton = findViewById(R.id.playButton);
+
+        mainDisplayShowLayout = findViewById(R.id.mainDisplayShowLayout);
+        logoImageView = findViewById(R.id.logoImageView);
+        imageLayout = findViewById(R.id.imageLayout);
+        buttonLayout = findViewById(R.id.buttonLayout);
+        genreLayout = findViewById(R.id.genreLayout);
+        nameLayout = findViewById(R.id.nameLayout);
+        playLayout = findViewById(R.id.playLayout);
+
+
+    }
+
 
     private void displayATVShow() {
         final TVShow tvShowSelected = chooseATVShow();
@@ -130,25 +167,51 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                 }
             });
 
-            backButton.setOnClickListener(new View.OnClickListener() {
+            infoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent displayMenu = new Intent(playButton.getContext(), MainActivity.class);
-                    startActivity(displayMenu);
+                    displayInfoGeneration(howGenerate);
                 }
             });
+
+
 
         } else {
             nameLayout.setVisibility(View.INVISIBLE);
             buttonLayout.setVisibility(View.INVISIBLE);
-            genreLayout.setVisibility(View.INVISIBLE);
+            genreTextView.setVisibility(View.INVISIBLE);
             imageLayout.setVisibility(View.INVISIBLE);
             playLayout.setVisibility(View.INVISIBLE);
             synopsisTextView.setVisibility(View.INVISIBLE);
+            infoButton.setVisibility(View.INVISIBLE);
             endTextView.setVisibility(View.VISIBLE);
             logoImageView.setVisibility(View.VISIBLE);
         }
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent displayMenu = new Intent(playButton.getContext(), MenuActivity.class);
+                startActivity(displayMenu);
+            }
+        });
     }
+
+    private void displayInfoGeneration(String howGenerate) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast,
+                (ViewGroup) findViewById(R.id.custom_toast_container));
+
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        text.setText(howGenerate);
+
+        Toast toast = new Toast(infoButton.getContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP,0,150);
+        toast.setView(layout);
+        toast.show();
+
+     }
 
     private TVShow chooseATVShow() {
         DatabaseHelper databaseHelper = new DatabaseHelper(mainDisplayShowLayout.getContext());
@@ -197,6 +260,8 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                         Arrays.asList(tvShow.getGenre()).contains(bestGenre[1]) &&
                         Arrays.asList(tvShow.getGenre()).contains(bestGenre[2])) {
                     Log.d("TViscovery", "3 Best Genre");
+                    howGenerate = "Généré grâce à vos 3 genres de série préféré.\n\n "
+                    +bestGenre[0] +", " + bestGenre[1]+ " et " + bestGenre[2];
                     tvShowSelectionned = tvShow;
                     break;
                 }
@@ -209,6 +274,8 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                     if (Arrays.asList(tvShow.getGenre()).contains(bestGenre[0]) &&
                             Arrays.asList(tvShow.getGenre()).contains(bestGenre[1])) {
                         Log.d("TViscovery", "2 Best Genre");
+                        howGenerate = "Généré grâce à vos 2 genres de série préféré.\n\n "
+                                +bestGenre[0] +" et " + bestGenre[1];
                         tvShowSelectionned = tvShow;
                         break;
                     }
@@ -224,6 +291,8 @@ public class DisplayTVShowActivity extends AppCompatActivity {
 
                     if (Arrays.asList(tvShow.getGenre()).contains(bestGenre[0])) {
                         Log.d("TViscovery", "Best Genre");
+                        howGenerate = "Généré grâce à votre genre de série préféré.\n\n "
+                                +bestGenre[0];
                         tvShowSelectionned = tvShow;
                         break;
                     }
@@ -237,6 +306,8 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                 if (tvShow.getGenre().length >= 1 && !tvShow.getViewed()) {
                     if (Arrays.asList(tvShow.getGenre()).contains(bestGenre[1])) {
                         Log.d("TViscovery", "2nd Best Genre");
+                        howGenerate = "Généré grâce à votre second genre de série préféré.\n\n "
+                                 + bestGenre[1];
                         tvShowSelectionned = tvShow;
                         break;
                     }
@@ -249,6 +320,8 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                 if (tvShow.getGenre().length >= 1 && !tvShow.getViewed()) {
                     if (Arrays.asList(tvShow.getGenre()).contains(bestGenre[2])) {
                         Log.d("TViscovery", "3rd Best Genre");
+                        howGenerate = "Généré grâce à votre troisième genre de série préféré.\n\n "
+                                + bestGenre[2];
                         tvShowSelectionned = tvShow;
                         break;
                     }
@@ -262,9 +335,11 @@ public class DisplayTVShowActivity extends AppCompatActivity {
             do {
 
                 Random r = new Random();
-                int i = 0 + r.nextInt(tvShows.length);
+                int i = r.nextInt(tvShows.length);
                 if (!tvShows[i].getViewed()) {
                     Log.d("TViscovery", "Alea");
+                    howGenerate = "Généré aléatoirement car :\n\n Pas suffisamment d'info sur les séries que vous aimez.\n\n " +
+                            "Ou nous n'avons plus de séries correspondant à vos goûts.";
                     tvShowSelectionned = tvShows[i];
                 }
                 j--;
@@ -278,31 +353,7 @@ public class DisplayTVShowActivity extends AppCompatActivity {
         return tvShowSelectionned;
     }
 
-    private void initialiseLayouts() {
-        likeButton = findViewById(R.id.likeButton);
-        interestedButton = findViewById(R.id.interestedButton);
-        skipButton = findViewById(R.id.skipButton);
-        dislikeButton = findViewById(R.id.dislikeButton);
-        backButton = findViewById(R.id.backButton);
 
-        nameTextView = findViewById(R.id.nameTextView);
-        synopsisTextView = findViewById(R.id.synopsisTextView);
-        genreTextView = findViewById(R.id.genreTextView);
-        endTextView = findViewById(R.id.endTextView);
-        imageView = findViewById(R.id.imageView);
-
-        playButton = findViewById(R.id.playButton);
-
-        mainDisplayShowLayout = findViewById(R.id.mainDisplayShowLayout);
-        logoImageView = findViewById(R.id.logoImageView);
-        imageLayout = findViewById(R.id.imageLayout);
-        buttonLayout = findViewById(R.id.buttonLayout);
-        genreLayout = findViewById(R.id.genreLayout);
-        nameLayout = findViewById(R.id.nameLayout);
-        playLayout = findViewById(R.id.playLayout);
-
-
-    }
 
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

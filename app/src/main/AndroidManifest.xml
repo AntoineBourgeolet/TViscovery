@@ -12,8 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".AboutActivity"
+            android:label="@string/title_activity_about"></activity>
+        <activity
             android:name=".ListShowActivity"
-            android:label="@string/title_activity_list_show"></activity>
+            android:label="@string/title_activity_list_show"
+            android:noHistory="true" />
         <activity
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu" />
@@ -25,6 +29,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
+            android:noHistory="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

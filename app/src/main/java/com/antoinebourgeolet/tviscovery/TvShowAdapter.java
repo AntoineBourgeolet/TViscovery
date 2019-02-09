@@ -76,10 +76,10 @@ public class TvShowAdapter extends ArrayAdapter<TVShow> {
                 databaseHelper.updateTVShowInt(1, finalCurrentTVShow.getId(), "viewed", database);
                 databaseHelper.updateTVShowInt(1, finalCurrentTVShow.getId(), "liked", database);
                 databaseHelper.updateTVShowInt(0, finalCurrentTVShow.getId(), "addedToList", database);
-                Intent intent = new Intent(finalConvertView.getContext(), ListShowActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                finalConvertView.getContext().startActivity(intent);
+                actionOnButton("Enregistré", tvShowHolder);
             }
+
+
         });
 
         tvShowHolder.dislikeButton.setOnClickListener(new View.OnClickListener() {
@@ -91,9 +91,7 @@ public class TvShowAdapter extends ArrayAdapter<TVShow> {
                 databaseHelper.updateTVShowInt(1, finalCurrentTVShow.getId(), "viewed", database);
                 databaseHelper.updateTVShowInt(1, finalCurrentTVShow.getId(), "disliked", database);
                 databaseHelper.updateTVShowInt(0, finalCurrentTVShow.getId(), "addedToList", database);
-                Intent intent = new Intent(finalConvertView.getContext(), ListShowActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                finalConvertView.getContext().startActivity(intent);
+                actionOnButton("Enregistré", tvShowHolder);
             }
         });
         tvShowHolder.cellView.setLongClickable(true);
@@ -113,9 +111,8 @@ public class TvShowAdapter extends ArrayAdapter<TVShow> {
                                 }
                                 databaseHelper.updateTVShowInt(1, finalCurrentTVShow.getId(), "viewed", database);
                                 databaseHelper.updateTVShowInt(0, finalCurrentTVShow.getId(), "addedToList", database);
-                                Intent intent = new Intent(finalConvertView.getContext(), ListShowActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                finalConvertView.getContext().startActivity(intent);
+                                actionOnButton("Supprimé", tvShowHolder);
+
                             }
 
                         })
@@ -161,5 +158,17 @@ public class TvShowAdapter extends ArrayAdapter<TVShow> {
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }
+    }
+
+    private void actionOnButton(String Message, TVShowHolder tvShowHolder) {
+        tvShowHolder.dislikeButton.setVisibility(View.INVISIBLE);
+        tvShowHolder.likeButton.setVisibility(View.INVISIBLE);
+        tvShowHolder.imageView.setVisibility(View.INVISIBLE);
+        int bgColor = tvShowHolder.cellView.getResources().getColor(R.color.gray);
+        tvShowHolder.cellView.setBackgroundColor(bgColor);
+        int textColor = tvShowHolder.cellView.getResources().getColor(R.color.genre);
+        tvShowHolder.firstTextView.setTextColor(textColor);
+        tvShowHolder.firstTextView.setTextSize(25);
+        tvShowHolder.firstTextView.setText(Message);
     }
 }
