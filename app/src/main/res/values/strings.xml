@@ -5,4 +5,13 @@
     <string name="je_ne_sais_pas">Pas interessé</string>
     <string name="j_aime_pas">J\'aime pas</string>
     <string name="icon_button_label_enabled">J\'aime</string>
+    <string name="image">Image</string>
+    <string name="titre">Titre</string>
+    <string name="genre">Genre</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="vous_avez_vu_tout_le_contenu_revenez_plus_tard_pour_avoir_des_nouveaut_s">Vous avez vu tout le contenu, revenez plus tard pour avoir des nouveautés.</string>
+    <string name="logo">Logo</string>
+    <string name="info">Info</string>
+    <string name="c_est_partie">Découvrir</string>
+    <string name="title_activity_menu">MenuActivity</string>
 </resources>

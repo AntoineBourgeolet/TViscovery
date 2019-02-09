@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.File;
@@ -144,10 +145,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put("image", currentTVShow.getImage());
             values.put("synopsis", currentTVShow.getSynopsis());
             values.put("video", currentTVShow.getVideo());
-
             db.update(TABLE_NAME_TVSHOW, values, "_id = ?", new String[]{String.valueOf(i + 1)});
-        }
-    }
+        }    }
 
     public void updateListGenre(String[] genres, SQLiteDatabase db) {
         for (int i = 0; this.selectAllGenre(db).length > i; i++) {

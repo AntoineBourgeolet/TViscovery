@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Random;
 
 import androidx.appcompat.app.AppCompatActivity;
 import retrofit2.Call;
@@ -23,9 +24,8 @@ import retrofit2.http.GET;
 public class MainActivity extends AppCompatActivity {
 
     View mainLayout;
-    Button startButton;
-    TextView infoTextView;
-    ProgressBar progressBar;
+
+    RelativeLayout chargingLayout;
 
 
     @Override
@@ -34,21 +34,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        mainLayout = findViewById(R.id.mainLayout);
         initialiseLayouts();
         callWebServiceForTVShowList();
 
     }
 
     private void initialiseLayouts() {
-        startButton = findViewById(R.id.startButton);
-        infoTextView = findViewById(R.id.infoTextView);
-        progressBar = findViewById(R.id.progressBar);
-
-        String messageInfo = "Veuillez attendre que les infos soit mis à jours";
-        infoTextView.setText(messageInfo);
-        progressBar.setVisibility(View.VISIBLE);
-        startButton.setEnabled(false);
+        mainLayout = findViewById(R.id.mainLayout);
+        chargingLayout = findViewById(R.id.chargingLayout);
     }
 
     private void callWebServiceForTVShowList() {
@@ -63,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         getAllTVShow.enqueue(new Callback<List<TVShow>>() {
             @Override
             public void onResponse(Call<List<TVShow>> call, Response<List<TVShow>> response) {
-                Log.w("TViscovery","ResponseFromALLTVSHOW");
+                Log.w("TViscovery", "ResponseFromALLTVSHOW");
                 DatabaseHelper databaseHelper = new DatabaseHelper(mainLayout.getContext());
                 SQLiteDatabase database = databaseHelper.getWritableDatabase();
                 databaseHelper.updateListTVShow(response.body(), database);
@@ -79,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 getAllGenre.enqueue(new Callback<String[]>() {
                     @Override
                     public void onResponse(Call<String[]> call, Response<String[]> response) {
-                        Log.w("TViscovery","ResponseFromALLGenre");
+                        Log.w("TViscovery", "ResponseFromALLGenre");
                         DatabaseHelper databaseHelper = new DatabaseHelper(mainLayout.getContext());
                         SQLiteDatabase database = databaseHelper.getWritableDatabase();
 
@@ -91,56 +84,32 @@ public class MainActivity extends AppCompatActivity {
 
                         Log.d("TViscovery", String.valueOf(genres[0].getGenre()));
 
-                        String messageInfo = "Mise à jour correctement effectué";
                         database.close();
-                        infoTextView.setText(messageInfo);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        startButton.setEnabled(true);
 
-                        startButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent displayTVShowActivityIntent = new Intent(startButton.getContext(), DisplayTVShowActivity.class);
-                                startActivity(displayTVShowActivityIntent);
+                        Intent displayMenu = new Intent(chargingLayout.getContext(), MenuActivity.class);
+                        startActivity(displayMenu);
 
-                            }
-                        });
+
                     }
 
                     @Override
                     public void onFailure(Call<String[]> call, Throwable t) {
-                        String messageInfo = "Mise à jour en échec. Verifier votre connexion. Vous pouvez tout de même utiliser l'application normalement";
-                        infoTextView.setText(messageInfo);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        startButton.setEnabled(true);
 
-                        startButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent displayTVShowActivityIntent = new Intent(startButton.getContext(), DisplayTVShowActivity.class);
-                                startActivity(displayTVShowActivityIntent);
 
-                            }
-                        });
+                        Intent displayMenu = new Intent(chargingLayout.getContext(), MenuActivity.class);
+                        startActivity(displayMenu);
+
                     }
                 });
             }
 
             @Override
             public void onFailure(Call<List<TVShow>> call, Throwable t) {
-                String messageInfo = "Mise à jour en échec. Verifier votre connexion. Vous pouvez tout de même utiliser l'application normalement";
-                infoTextView.setText(messageInfo);
-                progressBar.setVisibility(View.INVISIBLE);
-                startButton.setEnabled(true);
 
-                startButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent displayTVShowActivityIntent = new Intent(startButton.getContext(), DisplayTVShowActivity.class);
-                        startActivity(displayTVShowActivityIntent);
 
-                    }
-                });
+                Intent displayMenu = new Intent(chargingLayout.getContext(), MenuActivity.class);
+                startActivity(displayMenu);
+
             }
         });
     }

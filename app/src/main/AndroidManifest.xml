@@ -11,7 +11,12 @@
         android:roundIcon="@mipmap/logo_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".YoutubePlayerActivity" android:configChanges="orientation|screenSize"></activity>
+        <activity
+            android:name=".MenuActivity"
+            android:label="@string/title_activity_menu"></activity>
+        <activity
+            android:name=".YoutubePlayerActivity"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".DisplayTVShowActivity"
             android:screenOrientation="portrait" />
@@ -24,6 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
