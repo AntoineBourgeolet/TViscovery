@@ -14,4 +14,5 @@
     <string name="info">Info</string>
     <string name="c_est_partie">Découvrir</string>
     <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_list_show">ListShowActivity</string>
 </resources>

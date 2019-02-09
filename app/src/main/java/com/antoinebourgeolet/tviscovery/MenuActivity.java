@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MenuActivity extends AppCompatActivity {
     Button startButton;
-    TextView infoTextView;
+    Button myListButton;
     LinearLayout menuLayout;
 
     @Override
@@ -21,6 +21,7 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         startButton = findViewById(R.id.startButton);
+        myListButton = findViewById(R.id.myListButton);
         menuLayout = findViewById(R.id.menuLayout);
 
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -30,6 +31,16 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(displayTVShowActivityIntent);
             }
         });
+
+        myListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent displayTVShowActivityIntent = new Intent(startButton.getContext(), ListShowActivity.class);
+                startActivity(displayTVShowActivityIntent);
+            }
+        });
+
+
 
     }
 

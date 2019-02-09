@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("TViscovery", "ResponseFromALLTVSHOW");
                 DatabaseHelper databaseHelper = new DatabaseHelper(mainLayout.getContext());
                 SQLiteDatabase database = databaseHelper.getWritableDatabase();
-                databaseHelper.updateListTVShow(response.body(), database);
+                //databaseHelper.updateListTVShow(response.body(), database);
                 databaseHelper.insertListTVShow(response.body(), database);
 
                 Retrofit retrofit = new Retrofit.Builder()
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         DatabaseHelper databaseHelper = new DatabaseHelper(mainLayout.getContext());
                         SQLiteDatabase database = databaseHelper.getWritableDatabase();
 
-                        databaseHelper.updateListGenre(response.body(), database);
+                        //databaseHelper.updateListGenre(response.body(), database);
                         databaseHelper.insertListGenre(response.body(), database);
 
 

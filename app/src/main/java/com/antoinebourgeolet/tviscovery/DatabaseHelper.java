@@ -248,4 +248,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return value;
     }
+
+    public TVShow[] selectAddedTVShow(SQLiteDatabase database) {
+        //SELECT * FROM Personne
+        Cursor cursor = database.query(
+                TABLE_NAME_TVSHOW, //Argument de la table
+                null,
+                "addedToList = ?",
+                new String[]{"1"},
+                null,
+                null,
+                null,
+                null
+        );
+
+        TVShow[] personnesFromDatabase = new TVShow[cursor.getCount()];
+
+        /*
+        On parcourt notre cursor grâce à la fonction moveToNext
+        Pour récupérer la valeur d'une colonne, on utilise :
+        cursor.getType(cursor.getColumIndexOrThrow("nomColonne"))
+         */
+        int i = 0;
+        while (cursor.moveToNext()) {
+            Log.w("TViscovery","A tv is in add list");
+            personnesFromDatabase[i] = new TVShow(
+                    cursor.getInt(cursor.getColumnIndexOrThrow("_id")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("genre")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("image")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("synopsis")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("video")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("viewed")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("liked")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("disliked")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("addedToList"))
+            );
+            i++;
+        }
+
+        cursor.close();
+        return personnesFromDatabase;
+    }
 }
