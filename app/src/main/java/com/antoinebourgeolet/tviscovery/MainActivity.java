@@ -1,5 +1,7 @@
 package com.antoinebourgeolet.tviscovery;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -94,22 +97,70 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<String[]> call, Throwable t) {
+                        DatabaseHelper databaseHelper = new DatabaseHelper(mainLayout.getContext());
+                        SQLiteDatabase database = databaseHelper.getWritableDatabase();
+                        if ((databaseHelper.selectAllTVShow(database).length == 0) || (databaseHelper.selectAllGenre(database).length == 0)) {
+                            new AlertDialog.Builder(mainLayout.getContext())
+                                    .setTitle("Pas de connexion internet")
+                                    .setMessage("Une connexion internet est nécessaire pour récupérer les données lors du premier lancement. Voulez-vous réessayer ?")
+                                    .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent mainActivityIntent = new Intent(mainLayout.getContext(), MainActivity.class);
+                                            startActivity(mainActivityIntent);
+                                        }
 
+                                    })
 
-                        Intent displayMenu = new Intent(chargingLayout.getContext(), MenuActivity.class);
-                        startActivity(displayMenu);
-
+                                    .setNeutralButton("Non", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            finish();
+                                        }
+                                    })
+                                    .show();
+                        } else {
+                            Toast.makeText(mainLayout.getContext(),
+                                    "Impossible de mettre à jour les données. Verifiez votre connexion.",
+                                    Toast.LENGTH_LONG).show();
+                            Intent displayMenu = new Intent(chargingLayout.getContext(), MenuActivity.class);
+                            startActivity(displayMenu);
+                        }
                     }
                 });
             }
 
             @Override
             public void onFailure(Call<List<TVShow>> call, Throwable t) {
+                DatabaseHelper databaseHelper = new DatabaseHelper(mainLayout.getContext());
+                SQLiteDatabase database = databaseHelper.getWritableDatabase();
+                if ((databaseHelper.selectAllTVShow(database).length == 0) || (databaseHelper.selectAllGenre(database).length == 0)) {
+                    new AlertDialog.Builder(mainLayout.getContext())
+                            .setTitle("Pas de connexion internet")
+                            .setMessage("Une connexion internet est nécessaire pour récupérer les données lors du premier lancement. Voulez-vous réessayer ?")
+                            .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent mainActivityIntent = new Intent(mainLayout.getContext(), MainActivity.class);
+                                    startActivity(mainActivityIntent);
+                                }
 
+                            })
 
-                Intent displayMenu = new Intent(chargingLayout.getContext(), MenuActivity.class);
-                startActivity(displayMenu);
-
+                            .setNeutralButton("Non", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            })
+                            .show();
+                } else {
+                    Toast.makeText(mainLayout.getContext(),
+                            "Impossible de mettre à jour les données. Verifiez votre connexion.",
+                            Toast.LENGTH_LONG).show();
+                    Intent displayMenu = new Intent(chargingLayout.getContext(), MenuActivity.class);
+                    startActivity(displayMenu);
+                }
             }
         });
     }

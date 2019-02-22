@@ -1,12 +1,11 @@
 package com.antoinebourgeolet.tviscovery;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,11 +20,12 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.Random;
 
-import androidx.annotation.RestrictTo;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class DisplayTVShowActivity extends AppCompatActivity {
@@ -161,9 +161,19 @@ public class DisplayTVShowActivity extends AppCompatActivity {
             playButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent displayYoutubeVideo = new Intent(playButton.getContext(), YoutubePlayerActivity.class);
-                    displayYoutubeVideo.putExtra("video", tvShowSelected.getVideo());
-                    startActivity(displayYoutubeVideo);
+                    if (tvShowSelected.getVideo().equals("")) {
+                        Toast.makeText(playButton.getContext(),
+                                "Aucune vidéo disponible pour cette série.",
+                                Toast.LENGTH_LONG).show();
+                    } else if (!isOnline(playButton.getContext())){
+                        Toast.makeText(playButton.getContext(),
+                                "Vous devez être connecté à internet.",
+                                Toast.LENGTH_LONG).show();
+                    }else{
+                        Intent displayYoutubeVideo = new Intent(playButton.getContext(), YoutubePlayerActivity.class);
+                        displayYoutubeVideo.putExtra("video", tvShowSelected.getVideo());
+                        startActivity(displayYoutubeVideo);
+                    }
                 }
             });
 
@@ -173,7 +183,6 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                     displayInfoGeneration(howGenerate);
                 }
             });
-
 
 
         } else {
@@ -207,11 +216,11 @@ public class DisplayTVShowActivity extends AppCompatActivity {
 
         Toast toast = new Toast(infoButton.getContext());
         toast.setDuration(Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP,0,150);
+        toast.setGravity(Gravity.TOP, 0, 150);
         toast.setView(layout);
         toast.show();
 
-     }
+    }
 
     private TVShow chooseATVShow() {
         DatabaseHelper databaseHelper = new DatabaseHelper(mainDisplayShowLayout.getContext());
@@ -261,7 +270,7 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                         Arrays.asList(tvShow.getGenre()).contains(bestGenre[2])) {
                     Log.d("TViscovery", "3 Best Genre");
                     howGenerate = "Généré grâce à vos 3 genres de série préféré.\n\n "
-                    +bestGenre[0] +", " + bestGenre[1]+ " et " + bestGenre[2];
+                            + bestGenre[0] + ", " + bestGenre[1] + " et " + bestGenre[2];
                     tvShowSelectionned = tvShow;
                     break;
                 }
@@ -275,7 +284,7 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                             Arrays.asList(tvShow.getGenre()).contains(bestGenre[1])) {
                         Log.d("TViscovery", "2 Best Genre");
                         howGenerate = "Généré grâce à vos 2 genres de série préféré.\n\n "
-                                +bestGenre[0] +" et " + bestGenre[1];
+                                + bestGenre[0] + " et " + bestGenre[1];
                         tvShowSelectionned = tvShow;
                         break;
                     }
@@ -292,7 +301,7 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                     if (Arrays.asList(tvShow.getGenre()).contains(bestGenre[0])) {
                         Log.d("TViscovery", "Best Genre");
                         howGenerate = "Généré grâce à votre genre de série préféré.\n\n "
-                                +bestGenre[0];
+                                + bestGenre[0];
                         tvShowSelectionned = tvShow;
                         break;
                     }
@@ -307,7 +316,7 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                     if (Arrays.asList(tvShow.getGenre()).contains(bestGenre[1])) {
                         Log.d("TViscovery", "2nd Best Genre");
                         howGenerate = "Généré grâce à votre second genre de série préféré.\n\n "
-                                 + bestGenre[1];
+                                + bestGenre[1];
                         tvShowSelectionned = tvShow;
                         break;
                     }
@@ -354,8 +363,6 @@ public class DisplayTVShowActivity extends AppCompatActivity {
     }
 
 
-
-
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
@@ -377,9 +384,17 @@ public class DisplayTVShowActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
+            if (result != null) {
+                bmImage.setImageBitmap(result);
+            } else {
+                bmImage.setImageResource(R.drawable.logo_no_connexion);
+            }
         }
     }
 
+    public boolean isOnline(Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
 }
 

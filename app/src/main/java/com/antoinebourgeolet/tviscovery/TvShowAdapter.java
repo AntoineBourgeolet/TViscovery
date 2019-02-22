@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,10 +64,10 @@ public class TvShowAdapter extends ArrayAdapter<TVShow> {
         assert currentTVShow != null;
         tvShowHolder.firstTextView.setText(currentTVShow.getName());
         new TvShowAdapter.DownloadImageTask(tvShowHolder.imageView).execute(currentTVShow.getImage());
+
         final DatabaseHelper databaseHelper = new DatabaseHelper(tvShowHolder.firstTextView.getContext());
         final SQLiteDatabase database = databaseHelper.getWritableDatabase();
         final TVShow finalCurrentTVShow = currentTVShow;
-        final View finalConvertView = convertView;
         tvShowHolder.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,10 +157,14 @@ public class TvShowAdapter extends ArrayAdapter<TVShow> {
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
+            if (result != null){
+                bmImage.setImageBitmap(result);
+            }
+            else {
+                bmImage.setImageResource(R.drawable.logo_no_connexion);
+            }
         }
     }
-
     private void actionOnButton(String Message, TVShowHolder tvShowHolder) {
         tvShowHolder.dislikeButton.setVisibility(View.INVISIBLE);
         tvShowHolder.likeButton.setVisibility(View.INVISIBLE);

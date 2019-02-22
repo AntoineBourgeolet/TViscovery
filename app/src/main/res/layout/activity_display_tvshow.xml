@@ -22,7 +22,7 @@
             android:cropToPadding="true"
             android:scaleType="centerCrop"
             android:visibility="visible"
-            tools:srcCompat="@tools:sample/avatars"
+            tools:srcCompat="@drawable/logo"
             android:contentDescription="@string/image" />
 
     </LinearLayout>
