@@ -14,4 +14,5 @@
     <color name="blue">#00ACC1</color>
     <color name="red">#E53935</color>
     <color name="purple">#673AB7</color>
+    <color name="tranparentGrey" >#86161616</color>
 </resources>

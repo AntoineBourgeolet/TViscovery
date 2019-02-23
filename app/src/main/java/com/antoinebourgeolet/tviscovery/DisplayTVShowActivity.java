@@ -109,7 +109,7 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                 synopsisTextView.setText(tvShowSelected.getSynopsis());
             }
             genreTextView.setText(tvShowSelected.getGenreForDisplay());
-
+            imageView.setImageResource(R.drawable.logo_loading);
             new DownloadImageTask(imageView).execute(tvShowSelected.getImage());
 
             final DatabaseHelper databaseHelper = new DatabaseHelper(mainDisplayShowLayout.getContext());

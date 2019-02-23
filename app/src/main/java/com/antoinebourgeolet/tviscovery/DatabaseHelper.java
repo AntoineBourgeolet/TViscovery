@@ -132,7 +132,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Update SQLite
         ContentValues values = new ContentValues();
         values.put(champ, newValue);
-        db.update(TABLE_NAME_TVSHOW, values, "_id = ?", new String[]{String.valueOf(id)});
+        Log.w("TViscovery","Modify "+id+" " +champ);
+        int test = db.update(TABLE_NAME_TVSHOW, values, "_id = ?", new String[]{String.valueOf(id)});
+
     }
 
     public void updateListTVShow(List<TVShow> tvShows, SQLiteDatabase db) {
@@ -294,5 +296,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void reset(SQLiteDatabase database) {
         database.delete(TABLE_NAME_TVSHOW,null,null);
         database.delete(TABLE_NAME_INFO,null,null);
+    }
+
+    public TVShow selectTVShowById(SQLiteDatabase database, int ID) {
+        //SELECT * FROM Personne
+        Cursor cursor = database.query(
+                TABLE_NAME_TVSHOW, //Argument de la table
+                null,
+                "_id = ?",
+                new String[]{String.valueOf(ID)},
+                null,
+                null,
+                null,
+                null
+        );
+
+            Log.w("TViscovery","A tv is selected");
+            cursor.moveToNext();
+                TVShow tvShow  = new TVShow(
+                    cursor.getInt(cursor.getColumnIndexOrThrow("_id")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("genre")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("image")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("synopsis")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("video")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("viewed")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("liked")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("disliked")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("addedToList"))
+            );
+
+        cursor.close();
+        return tvShow;
     }
 }

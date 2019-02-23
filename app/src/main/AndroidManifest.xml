@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo_launcher"
@@ -13,15 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ViewTvshowOfListActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_view_tvshow_of_list"></activity>
+        <activity
             android:name=".AboutActivity"
-            android:label="@string/title_activity_about"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_about" />
         <activity
             android:name=".ListShowActivity"
             android:label="@string/title_activity_list_show"
+            android:screenOrientation="portrait"
             android:noHistory="true" />
         <activity
             android:name=".MenuActivity"
-            android:label="@string/title_activity_menu" />
+            android:label="@string/title_activity_menu"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".YoutubePlayerActivity"
             android:configChanges="orientation|screenSize" />

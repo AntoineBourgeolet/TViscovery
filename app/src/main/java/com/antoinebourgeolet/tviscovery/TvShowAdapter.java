@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.InputStream;
@@ -50,11 +51,7 @@ public class TvShowAdapter extends ArrayAdapter<TVShow> {
         tvShowHolder.imageView =
                 convertView.findViewById(R.id.imageView);
 
-        tvShowHolder.likeButton =
-                convertView.findViewById(R.id.likeButton);
 
-        tvShowHolder.dislikeButton =
-                convertView.findViewById(R.id.dislikeButton);
 
         tvShowHolder.cellView =
                 convertView.findViewById(R.id.cellView);
@@ -68,31 +65,15 @@ public class TvShowAdapter extends ArrayAdapter<TVShow> {
         final DatabaseHelper databaseHelper = new DatabaseHelper(tvShowHolder.firstTextView.getContext());
         final SQLiteDatabase database = databaseHelper.getWritableDatabase();
         final TVShow finalCurrentTVShow = currentTVShow;
-        tvShowHolder.likeButton.setOnClickListener(new View.OnClickListener() {
+
+
+        tvShowHolder.cellView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (String genre : finalCurrentTVShow.getGenre()) {
-                    databaseHelper.updateValueFromGenre(3, false, genre, database);
-                }
-                databaseHelper.updateTVShowInt(1, finalCurrentTVShow.getId(), "viewed", database);
-                databaseHelper.updateTVShowInt(1, finalCurrentTVShow.getId(), "liked", database);
-                databaseHelper.updateTVShowInt(0, finalCurrentTVShow.getId(), "addedToList", database);
-                actionOnButton("Enregistré", tvShowHolder);
-            }
+                Intent displayListActivityIntent = new Intent(tvShowHolder.cellView.getContext(), ViewTvshowOfListActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
+                displayListActivityIntent.putExtra("id", finalCurrentTVShow.getId());
+                v.getContext().startActivity(displayListActivityIntent);
 
-
-        });
-
-        tvShowHolder.dislikeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (String genre : finalCurrentTVShow.getGenre()) {
-                    databaseHelper.updateValueFromGenre(3, true, genre, database);
-                }
-                databaseHelper.updateTVShowInt(1, finalCurrentTVShow.getId(), "viewed", database);
-                databaseHelper.updateTVShowInt(1, finalCurrentTVShow.getId(), "disliked", database);
-                databaseHelper.updateTVShowInt(0, finalCurrentTVShow.getId(), "addedToList", database);
-                actionOnButton("Enregistré", tvShowHolder);
             }
         });
         tvShowHolder.cellView.setLongClickable(true);
@@ -131,9 +112,7 @@ public class TvShowAdapter extends ArrayAdapter<TVShow> {
     private class TVShowHolder {
         public TextView firstTextView;
         public ImageView imageView;
-        public ImageView likeButton;
-        public ImageView dislikeButton;
-        public LinearLayout cellView;
+        public RelativeLayout cellView;
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -157,17 +136,14 @@ public class TvShowAdapter extends ArrayAdapter<TVShow> {
         }
 
         protected void onPostExecute(Bitmap result) {
-            if (result != null){
+            if (result != null) {
                 bmImage.setImageBitmap(result);
-            }
-            else {
+            } else {
                 bmImage.setImageResource(R.drawable.logo_no_connexion);
             }
         }
     }
     private void actionOnButton(String Message, TVShowHolder tvShowHolder) {
-        tvShowHolder.dislikeButton.setVisibility(View.INVISIBLE);
-        tvShowHolder.likeButton.setVisibility(View.INVISIBLE);
         tvShowHolder.imageView.setVisibility(View.INVISIBLE);
         int bgColor = tvShowHolder.cellView.getResources().getColor(R.color.gray);
         tvShowHolder.cellView.setBackgroundColor(bgColor);

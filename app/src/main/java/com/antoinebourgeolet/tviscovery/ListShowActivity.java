@@ -30,6 +30,13 @@ public class ListShowActivity extends AppCompatActivity {
         emptyText = findViewById(R.id.emptyText);
     }
 
+
+    @Override
+    public void onBackPressed() {
+        Intent displayMenuIntent = new Intent(listView.getContext(), MenuActivity.class);
+        startActivity(displayMenuIntent);
+    }
+
     private void behaviorViews(){
         /*
         On récupére les données passées par l'Intent avec la fonction suivante :

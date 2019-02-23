@@ -16,4 +16,5 @@
     <string name="title_activity_menu">MenuActivity</string>
     <string name="title_activity_list_show">ListShowActivity</string>
     <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_view_tvshow_of_list">ViewTvshowOfListActivity</string>
 </resources>
