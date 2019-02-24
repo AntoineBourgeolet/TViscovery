@@ -9,10 +9,12 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class AboutActivity extends Activity {
     ImageView backButton;
     Button resetButton;
+    TextView versionTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,10 @@ public class AboutActivity extends Activity {
         setContentView(R.layout.activity_about);
         backButton = findViewById(R.id.backButton);
         resetButton = findViewById(R.id.resetButton);
+        versionTextView = findViewById(R.id.versionTextView);
+
+
+        versionTextView.setText("Version actuel - " + BuildConfig.VERSION_CODE + " - " + BuildConfig.VERSION_NAME);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

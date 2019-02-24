@@ -70,11 +70,8 @@ public class ViewTvshowOfListActivity extends Activity {
         playButton = findViewById(R.id.playButton);
 
         mainDisplayShowLayout = findViewById(R.id.mainDisplayShowLayout);
-        imageLayout = findViewById(R.id.imageLayout);
         buttonLayout = findViewById(R.id.buttonLayout);
         genreLayout = findViewById(R.id.genreLayout);
-        nameLayout = findViewById(R.id.nameLayout);
-        playLayout = findViewById(R.id.playLayout);
     }
 
     private void displayATVShow() {

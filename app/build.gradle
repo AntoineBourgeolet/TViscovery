@@ -13,8 +13,8 @@ android {
         applicationId "com.antoinebourgeolet.tviscovery"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 4
-        versionName "Stefan Salvatore"
+        versionCode 5
+        versionName "Dolores Abernathy"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

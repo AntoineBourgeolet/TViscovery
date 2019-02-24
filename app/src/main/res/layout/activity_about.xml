@@ -78,11 +78,12 @@
         android:layout_marginEnd="20dp"
         android:layout_weight="1"/>
     <TextView
+        android:id="@+id/versionTextView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:text="Version actuel - 0.0.9"
+        android:text="Version"
         android:gravity="center"/>
 </LinearLayout>

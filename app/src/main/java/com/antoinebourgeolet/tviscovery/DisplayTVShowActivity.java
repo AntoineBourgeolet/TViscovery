@@ -15,14 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -45,11 +44,9 @@ public class DisplayTVShowActivity extends AppCompatActivity {
 
     ImageView imageView;
     ImageView logoImageView;
-    LinearLayout imageLayout;
     LinearLayout buttonLayout;
     LinearLayout genreLayout;
-    LinearLayout nameLayout;
-    LinearLayout playLayout;
+    RelativeLayout playButtonLayout;
 
     FloatingActionButton playButton;
 
@@ -86,17 +83,16 @@ public class DisplayTVShowActivity extends AppCompatActivity {
 
         mainDisplayShowLayout = findViewById(R.id.mainDisplayShowLayout);
         logoImageView = findViewById(R.id.logoImageView);
-        imageLayout = findViewById(R.id.imageLayout);
         buttonLayout = findViewById(R.id.buttonLayout);
+        playButtonLayout = findViewById(R.id.playButtonLayout);
         genreLayout = findViewById(R.id.genreLayout);
-        nameLayout = findViewById(R.id.nameLayout);
-        playLayout = findViewById(R.id.playLayout);
 
 
     }
 
 
     private void displayATVShow() {
+        playButton.bringToFront();
         final TVShow tvShowSelected = chooseATVShow();
         if (tvShowSelected.getName() != "noMoreTVShow") {
             nameTextView.setText(tvShowSelected.getName());
@@ -191,13 +187,13 @@ public class DisplayTVShowActivity extends AppCompatActivity {
 
 
         } else {
-            nameLayout.setVisibility(View.INVISIBLE);
-            buttonLayout.setVisibility(View.INVISIBLE);
+            buttonLayout.setVisibility(View.GONE);
             genreTextView.setVisibility(View.INVISIBLE);
-            imageLayout.setVisibility(View.INVISIBLE);
-            playLayout.setVisibility(View.INVISIBLE);
-            synopsisTextView.setVisibility(View.INVISIBLE);
+            synopsisTextView.setVisibility(View.GONE);
             infoButton.setVisibility(View.INVISIBLE);
+            nameTextView.setVisibility(View.GONE);
+            playButtonLayout.setVisibility(View.GONE);
+            imageView.setVisibility(View.GONE);
             endTextView.setVisibility(View.VISIBLE);
             logoImageView.setVisibility(View.VISIBLE);
         }
