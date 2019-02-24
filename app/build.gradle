@@ -1,12 +1,20 @@
 apply plugin: 'com.android.application'
 android {
+    signingConfigs {
+        config {
+            keyAlias 'Yuplae'
+            keyPassword 'Hdy55cp1'
+            storeFile file('C:/Users/abour/Desktop/keyTViscovery.jks')
+            storePassword 'Hdy55cp1'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.antoinebourgeolet.tviscovery"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "Stefan Salvatore"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

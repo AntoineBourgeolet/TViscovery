@@ -80,82 +80,93 @@ public class ViewTvshowOfListActivity extends Activity {
     private void displayATVShow() {
         final DatabaseHelper databaseHelper = new DatabaseHelper(mainDisplayShowLayout.getContext());
         final SQLiteDatabase database = databaseHelper.getWritableDatabase();
-        final TVShow tvShowSelected =  databaseHelper.selectTVShowById(database, (int) getIntent().getExtras().getInt("id"));
-            nameTextView.setText(tvShowSelected.getName());
-            Log.d("TViscovery", String.valueOf(tvShowSelected.getSynopsis().length()));
-            if (tvShowSelected.getSynopsis().length() > 320) {
-                Log.d("TViscovery", "Long synopsis");
-                synopsisTextView.setText(String.format("%s...", tvShowSelected.getSynopsis().substring(0, 320)));
-            } else {
-                Log.d("TViscovery", "Short synopsis");
-                synopsisTextView.setText(tvShowSelected.getSynopsis());
+        final TVShow tvShowSelected = databaseHelper.selectTVShowById(database, (int) getIntent().getExtras().getInt("id"));
+        nameTextView.setText(tvShowSelected.getName());
+        Log.d("TViscovery", String.valueOf(tvShowSelected.getSynopsis().length()));
+        int i = 400;
+        if (tvShowSelected.getSynopsis().length() > i) {
+            Log.d("TViscovery", "Long synopsis");
+            while (!tvShowSelected.getSynopsis().substring(i, i + 1).equals(" ")) {
+                i--;
             }
-            genreTextView.setText(tvShowSelected.getGenreForDisplay());
-            imageView.setImageResource(R.drawable.logo_loading);
-            new ViewTvshowOfListActivity.DownloadImageTask(imageView).execute(tvShowSelected.getImage());
+            synopsisTextView.setText(String.format("%s...", tvShowSelected.getSynopsis().substring(0, i)));
+        } else {
+            Log.d("TViscovery", "Short synopsis");
+            synopsisTextView.setText(tvShowSelected.getSynopsis());
+        }
+        genreTextView.setText(tvShowSelected.getGenreForDisplay());
+        imageView.setImageResource(R.drawable.logo_loading);
+        new ViewTvshowOfListActivity.DownloadImageTask(imageView).execute(tvShowSelected.getImage());
 
 
-            likeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for (String genre : tvShowSelected.getGenre()) {
-                        databaseHelper.updateValueFromGenre(3, false, genre, database);
-                    }
-                    databaseHelper.updateTVShowInt(1, tvShowSelected.getId(), "viewed", database);
-                    databaseHelper.updateTVShowInt(1, tvShowSelected.getId(), "liked", database);
-                    databaseHelper.updateTVShowInt(0, tvShowSelected.getId(), "addedToList", database);
-                    Intent displayListActivityIntent = new Intent(likeButton.getContext(), ListShowActivity.class);
-                    startActivity(displayListActivityIntent);
-
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (String genre : tvShowSelected.getGenre()) {
+                    databaseHelper.updateValueFromGenre(3, false, genre, database);
                 }
-            });
-            dislikeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for (String genre : tvShowSelected.getGenre()) {
-                        databaseHelper.updateValueFromGenre(3, true, genre, database);
-                    }
-                    databaseHelper.updateTVShowInt(1, tvShowSelected.getId(), "viewed", database);
-                    databaseHelper.updateTVShowInt(1, tvShowSelected.getId(), "disliked", database);
-                    databaseHelper.updateTVShowInt(0, tvShowSelected.getId(), "addedToList", database);
-                    Intent displayListActivityIntent = new Intent(dislikeButton.getContext(), ListShowActivity.class);
-                    startActivity(displayListActivityIntent);
+                databaseHelper.updateTVShowInt(1, tvShowSelected.getId(), "viewed", database);
+                databaseHelper.updateTVShowInt(1, tvShowSelected.getId(), "liked", database);
+                databaseHelper.updateTVShowInt(0, tvShowSelected.getId(), "addedToList", database);
+                Toast.makeText(playButton.getContext(),
+                        "Changement enregistré.",
+                        Toast.LENGTH_LONG).show();
+                Intent displayListActivityIntent = new Intent(likeButton.getContext(), ListShowActivity.class);
+                startActivity(displayListActivityIntent);
+
+            }
+        });
+        dislikeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (String genre : tvShowSelected.getGenre()) {
+                    databaseHelper.updateValueFromGenre(3, true, genre, database);
                 }
-            });
+                databaseHelper.updateTVShowInt(1, tvShowSelected.getId(), "viewed", database);
+                databaseHelper.updateTVShowInt(1, tvShowSelected.getId(), "disliked", database);
+                databaseHelper.updateTVShowInt(0, tvShowSelected.getId(), "addedToList", database);
+                Toast.makeText(playButton.getContext(),
+                        "Changement enregistré.",
+                        Toast.LENGTH_LONG).show();
+                Intent displayListActivityIntent = new Intent(dislikeButton.getContext(), ListShowActivity.class);
+                startActivity(displayListActivityIntent);
+            }
+        });
 
-            skipButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for (String genre : tvShowSelected.getGenre()) {
-                        databaseHelper.updateValueFromGenre(1, true, genre, database);
-                    }
-                    databaseHelper.updateTVShowInt(1, tvShowSelected.getId(), "viewed", database);
-                    databaseHelper.updateTVShowInt(0, tvShowSelected.getId(), "addedToList", database);
-                    Intent displayListActivityIntent = new Intent(skipButton.getContext(), ListShowActivity.class);
-                    startActivity(displayListActivityIntent);
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (String genre : tvShowSelected.getGenre()) {
+                    databaseHelper.updateValueFromGenre(1, true, genre, database);
                 }
-            });
+                databaseHelper.updateTVShowInt(1, tvShowSelected.getId(), "viewed", database);
+                databaseHelper.updateTVShowInt(0, tvShowSelected.getId(), "addedToList", database);
+                Toast.makeText(playButton.getContext(),
+                        "Changement enregistré.",
+                        Toast.LENGTH_LONG).show();
+                Intent displayListActivityIntent = new Intent(skipButton.getContext(), ListShowActivity.class);
+                startActivity(displayListActivityIntent);
+            }
+        });
 
-            playButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (tvShowSelected.getVideo().equals("")) {
-                        Toast.makeText(playButton.getContext(),
-                                "Aucune vidéo disponible pour cette série.",
-                                Toast.LENGTH_LONG).show();
-                    } else if (!isOnline(playButton.getContext())){
-                        Toast.makeText(playButton.getContext(),
-                                "Vous devez être connecté à internet.",
-                                Toast.LENGTH_LONG).show();
-                    }else{
-                        Intent displayYoutubeVideo = new Intent(playButton.getContext(), YoutubePlayerActivity.class);
-                        displayYoutubeVideo.putExtra("video", tvShowSelected.getVideo());
-                        startActivity(displayYoutubeVideo);
-                    }
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tvShowSelected.getVideo().equals("")) {
+                    Toast.makeText(playButton.getContext(),
+                            "Aucune vidéo disponible pour cette série.",
+                            Toast.LENGTH_LONG).show();
+                } else if (!isOnline(playButton.getContext())) {
+                    Toast.makeText(playButton.getContext(),
+                            "Vous devez être connecté à internet.",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    Intent displayYoutubeVideo = new Intent(playButton.getContext(), YoutubePlayerActivity.class);
+                    displayYoutubeVideo.putExtra("video", tvShowSelected.getVideo());
+                    startActivity(displayYoutubeVideo);
                 }
-            });
-
-
+            }
+        });
 
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +177,7 @@ public class ViewTvshowOfListActivity extends Activity {
             }
         });
     }
+
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 

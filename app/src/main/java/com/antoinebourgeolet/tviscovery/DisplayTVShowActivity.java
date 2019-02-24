@@ -101,9 +101,14 @@ public class DisplayTVShowActivity extends AppCompatActivity {
         if (tvShowSelected.getName() != "noMoreTVShow") {
             nameTextView.setText(tvShowSelected.getName());
             Log.d("TViscovery", String.valueOf(tvShowSelected.getSynopsis().length()));
-            if (tvShowSelected.getSynopsis().length() > 320) {
+            int i = 400;
+            if (tvShowSelected.getSynopsis().length() > i) {
                 Log.d("TViscovery", "Long synopsis");
-                synopsisTextView.setText(String.format("%s...", tvShowSelected.getSynopsis().substring(0, 320)));
+                while(!tvShowSelected.getSynopsis().substring(i, i+1).equals(" "))
+                {
+                    i--;
+                }
+                synopsisTextView.setText(String.format("%s...", tvShowSelected.getSynopsis().substring(0, i)));
             } else {
                 Log.d("TViscovery", "Short synopsis");
                 synopsisTextView.setText(tvShowSelected.getSynopsis());

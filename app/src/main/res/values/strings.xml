@@ -17,4 +17,16 @@
     <string name="title_activity_list_show">ListShowActivity</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_view_tvshow_of_list">ViewTvshowOfListActivity</string>
+    <string name="bouton_lancer_video">Bouton lancer video</string>
+    <string name="bouton_retour_arri_re">Bouton retour arrière</string>
+    <string name="bouton_j_aime">Bouton j\'aime</string>
+    <string name="bouton_int_ress">Bouton intéressé</string>
+    <string name="bouton_passer">Bouton passer</string>
+    <string name="bouton_j_aime_pas">Bouton j\'aime pas</string>
+    <string name="lancer_la_video">Lancer la video</string>
+    <string name="bouton_retour_en_arriere">Bouton retour en arriere</string>
+    <string name="bouton_info">Bouton info</string>
+    <string name="bouton_j_aime2">Bouton j\'aime</string>
+    <string name="bouton_supprimer">Bouton supprimer</string>
+    <string name="bouton_j_aime_pas2">Bouton j\'aime pas</string>
 </resources>
