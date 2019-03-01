@@ -25,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "image TEXT," +
             "synopsis TEXT," +
             "video TEXT," +
+            "platform TEXT," +
             "viewed INTEGER," +
             "liked INTEGER," +
             "disliked INTEGER," +
@@ -71,6 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put("image", currentTVShow.getImage());
             values.put("synopsis", currentTVShow.getSynopsis());
             values.put("video", currentTVShow.getVideo());
+            values.put("platform", currentTVShow.getPlatformToString());
             values.put("viewed", 0);
             values.put("liked", 0);
             values.put("disliked", 0);
@@ -132,7 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Update SQLite
         ContentValues values = new ContentValues();
         values.put(champ, newValue);
-        Log.w("TViscovery","Modify "+id+" " +champ);
+        Log.w("TViscovery", "Modify " + id + " " + champ);
         int test = db.update(TABLE_NAME_TVSHOW, values, "_id = ?", new String[]{String.valueOf(id)});
 
     }
@@ -147,8 +149,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put("image", currentTVShow.getImage());
             values.put("synopsis", currentTVShow.getSynopsis());
             values.put("video", currentTVShow.getVideo());
+            values.put("platform", currentTVShow.getPlatformToString());
+
             db.update(TABLE_NAME_TVSHOW, values, "_id = ?", new String[]{String.valueOf(i + 1)});
-        }    }
+        }
+    }
 
     public void updateListGenre(String[] genres, SQLiteDatabase db) {
         for (int i = 0; this.selectAllGenre(db).length > i; i++) {
@@ -190,6 +195,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     cursor.getString(cursor.getColumnIndexOrThrow("image")),
                     cursor.getString(cursor.getColumnIndexOrThrow("synopsis")),
                     cursor.getString(cursor.getColumnIndexOrThrow("video")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("platform")),
                     cursor.getInt(cursor.getColumnIndexOrThrow("viewed")),
                     cursor.getInt(cursor.getColumnIndexOrThrow("liked")),
                     cursor.getInt(cursor.getColumnIndexOrThrow("disliked")),
@@ -214,7 +220,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void updateValueFromGenre(int valueToAdd,boolean soustraction, String genre, SQLiteDatabase db) {
+    public void updateValueFromGenre(int valueToAdd, boolean soustraction, String genre, SQLiteDatabase db) {
         int actualvalue = this.getValueFromGenre(db, genre);
         Log.e("TViscovery", String.valueOf(actualvalue));
         ContentValues values = new ContentValues();
@@ -273,7 +279,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
          */
         int i = 0;
         while (cursor.moveToNext()) {
-            Log.w("TViscovery","A tv is in add list");
+            Log.w("TViscovery", "A tv is in add list");
             personnesFromDatabase[i] = new TVShow(
                     cursor.getInt(cursor.getColumnIndexOrThrow("_id")),
                     cursor.getString(cursor.getColumnIndexOrThrow("name")),
@@ -281,6 +287,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     cursor.getString(cursor.getColumnIndexOrThrow("image")),
                     cursor.getString(cursor.getColumnIndexOrThrow("synopsis")),
                     cursor.getString(cursor.getColumnIndexOrThrow("video")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("platform")),
                     cursor.getInt(cursor.getColumnIndexOrThrow("viewed")),
                     cursor.getInt(cursor.getColumnIndexOrThrow("liked")),
                     cursor.getInt(cursor.getColumnIndexOrThrow("disliked")),
@@ -294,8 +301,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void reset(SQLiteDatabase database) {
-        database.delete(TABLE_NAME_TVSHOW,null,null);
-        database.delete(TABLE_NAME_INFO,null,null);
+        database.delete(TABLE_NAME_TVSHOW, null, null);
+        database.delete(TABLE_NAME_INFO, null, null);
     }
 
     public TVShow selectTVShowById(SQLiteDatabase database, int ID) {
@@ -311,20 +318,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null
         );
 
-            Log.w("TViscovery","A tv is selected");
-            cursor.moveToNext();
-                TVShow tvShow  = new TVShow(
-                    cursor.getInt(cursor.getColumnIndexOrThrow("_id")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("name")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("genre")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("image")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("synopsis")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("video")),
-                    cursor.getInt(cursor.getColumnIndexOrThrow("viewed")),
-                    cursor.getInt(cursor.getColumnIndexOrThrow("liked")),
-                    cursor.getInt(cursor.getColumnIndexOrThrow("disliked")),
-                    cursor.getInt(cursor.getColumnIndexOrThrow("addedToList"))
-            );
+        Log.w("TViscovery", "A tv is selected");
+        cursor.moveToNext();
+        TVShow tvShow = new TVShow(
+                cursor.getInt(cursor.getColumnIndexOrThrow("_id")),
+                cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                cursor.getString(cursor.getColumnIndexOrThrow("genre")),
+                cursor.getString(cursor.getColumnIndexOrThrow("image")),
+                cursor.getString(cursor.getColumnIndexOrThrow("synopsis")),
+                cursor.getString(cursor.getColumnIndexOrThrow("video")),
+                cursor.getString(cursor.getColumnIndexOrThrow("platform")),
+                cursor.getInt(cursor.getColumnIndexOrThrow("viewed")),
+                cursor.getInt(cursor.getColumnIndexOrThrow("liked")),
+                cursor.getInt(cursor.getColumnIndexOrThrow("disliked")),
+                cursor.getInt(cursor.getColumnIndexOrThrow("addedToList"))
+        );
 
         cursor.close();
         return tvShow;

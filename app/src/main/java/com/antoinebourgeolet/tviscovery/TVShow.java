@@ -20,6 +20,9 @@ class TVShow {
     @SerializedName("video")
     private String video;
 
+    @SerializedName("platform")
+    private String[] platform;
+
     private Boolean viewed;
 
     private Boolean liked;
@@ -40,20 +43,21 @@ class TVShow {
         addedToList = false;
     }
 
-    public TVShow(String name, String[] genre, String image, String synopsis, String video, Boolean viewed,
+    public TVShow(String name, String[] genre, String image, String synopsis, String video, String[] platform, Boolean viewed,
                   Boolean liked, Boolean disliked, Boolean addedToList) {
         this.name = name;
         this.genre = genre;
         this.image = image;
         this.synopsis = synopsis;
         this.video = video;
+        this.platform = platform;
         this.viewed = viewed;
         this.liked = liked;
         this.disliked = disliked;
         this.addedToList = addedToList;
     }
 
-    public TVShow(int id, String name, String strGenre, String image, String synopsis, String video, int intViewed,
+    public TVShow(int id, String name, String strGenre, String image, String synopsis, String video, String strPlatform, int intViewed,
                   int intLiked, int intDisliked, int intAddedToList) {
         this.id = id;
         this.name = name;
@@ -61,6 +65,7 @@ class TVShow {
         this.image = image;
         this.synopsis = synopsis;
         this.video = video;
+        this.platform = strPlatform.split("_");
         this.viewed = intViewed != 0;
         this.liked = intLiked != 0;
         this.disliked = intDisliked != 0;
@@ -90,12 +95,49 @@ class TVShow {
         return strGenre;
     }
 
+    public String getPlatformToString() {
+        String strPlatform = "";
+        if(platform != null)
+        {
+            for (String value : platform) {
+                if (strPlatform.isEmpty())
+                    strPlatform = value;
+                else
+                    strPlatform += "_" + value;
+            }
+        }
+        return strPlatform;
+    }
+
+    public String[] getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String[] platform) {
+        this.platform = platform;
+    }
+
+    public String getPlatformForDisplay() {
+        String strPlatform = "";
+        for (String value : platform) {
+            if (strPlatform.isEmpty())
+                strPlatform = value;
+            else
+                strPlatform += " - " + value;
+        }
+        return strPlatform;
+    }
+
     public int getId() {
         return id;
     }
 
     public void setGenreFromString(String strGenre) {
         this.genre = strGenre.split("_");
+    }
+
+    public void setPlatformFromString(String strPlatform) {
+        this.platform = strPlatform.split("_");
     }
 
     public String getName() {

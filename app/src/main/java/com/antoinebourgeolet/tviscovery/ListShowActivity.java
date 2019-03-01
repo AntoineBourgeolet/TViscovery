@@ -35,6 +35,7 @@ public class ListShowActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent displayMenuIntent = new Intent(listView.getContext(), MenuActivity.class);
         startActivity(displayMenuIntent);
+        finish();
     }
 
     private void behaviorViews(){

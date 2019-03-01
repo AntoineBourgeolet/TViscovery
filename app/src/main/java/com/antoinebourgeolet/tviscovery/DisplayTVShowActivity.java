@@ -29,10 +29,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class DisplayTVShowActivity extends AppCompatActivity {
 
-    ImageView likeButton;
-    ImageView interestedButton;
-    ImageView skipButton;
-    ImageView dislikeButton;
+    FloatingActionButton likeButton;
+    FloatingActionButton interestedButton;
+    FloatingActionButton skipButton;
+    FloatingActionButton dislikeButton;
     ImageView backButton;
     ImageView infoButton;
 
@@ -44,6 +44,8 @@ public class DisplayTVShowActivity extends AppCompatActivity {
 
     ImageView imageView;
     ImageView logoImageView;
+    ImageView platform1;
+    ImageView platform2;
     LinearLayout buttonLayout;
     LinearLayout genreLayout;
     RelativeLayout playButtonLayout;
@@ -78,6 +80,8 @@ public class DisplayTVShowActivity extends AppCompatActivity {
         genreTextView = findViewById(R.id.genreTextView);
         endTextView = findViewById(R.id.endTextView);
         imageView = findViewById(R.id.imageView);
+        platform1 = findViewById(R.id.platform1);
+        platform2 = findViewById(R.id.platform2);
 
         playButton = findViewById(R.id.playButton);
 
@@ -110,6 +114,25 @@ public class DisplayTVShowActivity extends AppCompatActivity {
                 synopsisTextView.setText(tvShowSelected.getSynopsis());
             }
             genreTextView.setText(tvShowSelected.getGenreForDisplay());
+            int platformNumber = tvShowSelected.getPlatform().length;
+            if(platformNumber >= 1)
+            {
+                platform1.setVisibility(View.VISIBLE);
+                setPlatformImage(tvShowSelected,platform1,0);
+            }
+            else {
+                platform1.setVisibility(View.INVISIBLE);
+            }
+
+            if(platformNumber >= 2)
+            {
+                platform2.setVisibility(View.VISIBLE);
+                setPlatformImage(tvShowSelected,platform2,1);
+
+            }
+            else {
+                platform2.setVisibility(View.INVISIBLE);
+            }
             imageView.setImageResource(R.drawable.logo_loading);
             new DownloadImageTask(imageView).execute(tvShowSelected.getImage());
 
@@ -187,6 +210,8 @@ public class DisplayTVShowActivity extends AppCompatActivity {
 
 
         } else {
+            platform1.setVisibility(View.GONE);
+            platform2.setVisibility(View.GONE);
             buttonLayout.setVisibility(View.GONE);
             genreTextView.setVisibility(View.INVISIBLE);
             synopsisTextView.setVisibility(View.GONE);
@@ -396,6 +421,67 @@ public class DisplayTVShowActivity extends AppCompatActivity {
     public boolean isOnline(Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+    private void setPlatformImage(TVShow tvShowSelected, ImageView platform, int index){
+        switch (tvShowSelected.getPlatform()[index]){
+            case "HBO": platform.setImageResource(R.drawable.hbo);
+                break;
+            case "Netflix": platform.setImageResource(R.drawable.netflix);
+                break;
+            case "AMC": platform.setImageResource(R.drawable.amc);
+                break;
+            case "Hulu": platform.setImageResource(R.drawable.hulu);
+                break;
+            case "OCS": platform.setImageResource(R.drawable.ocs);
+                break;
+            case "CW": platform.setImageResource(R.drawable.cw);
+                break;
+            case "History": platform.setImageResource(R.drawable.history);
+                break;
+            case "Amazon": platform.setImageResource(R.drawable.amazon);
+                break;
+            case "ShowTime": platform.setImageResource(R.drawable.showtime);
+                break;
+            case "USA Network": platform.setImageResource(R.drawable.usanetwork);
+                break;
+            case "Canal": platform.setImageResource(R.drawable.canal);
+                break;
+            case "Cinemax": platform.setImageResource(R.drawable.cinemax);
+                break;
+            case "ABC": platform.setImageResource(R.drawable.abc);
+                break;
+            case "FX": platform.setImageResource(R.drawable.fx);
+                break;
+            case "MTV": platform.setImageResource(R.drawable.mtv);
+                break;
+            case "Fox": platform.setImageResource(R.drawable.fox);
+                break;
+            case "Starz": platform.setImageResource(R.drawable.starz);
+                break;
+            case "TF1": platform.setImageResource(R.drawable.tf1);
+                break;
+            case "Warner Bros": platform.setImageResource(R.drawable.warner);
+                break;
+            case "M6": platform.setImageResource(R.drawable.m6);
+                break;
+            case "CBS": platform.setImageResource(R.drawable.cbs);
+                break;
+            case "France 2": platform.setImageResource(R.drawable.france2);
+                break;
+            case "France 3": platform.setImageResource(R.drawable.france3);
+                break;
+            case "NBC": platform.setImageResource(R.drawable.nbc);
+                break;
+            case "ARTE": platform.setImageResource(R.drawable.arte);
+                break;
+            case "C8": platform.setImageResource(R.drawable.c8);
+                break;
+            case "Syfy": platform.setImageResource(R.drawable.syfy);
+                break;
+            default:platform.setVisibility(View.INVISIBLE);
+                break;
+        }
     }
 }
 
