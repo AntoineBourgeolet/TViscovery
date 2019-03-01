@@ -201,8 +201,11 @@
                 android:backgroundTint="@android:color/white"
                 android:contentDescription="@string/bouton_j_aime"
                 app:borderWidth="0dp"
+                app:fabCustomSize="52dp"
+
                 android:padding="10dp"
-                app:srcCompat="@drawable/round_thumb_up_24" />
+                app:srcCompat="@drawable/round_thumb_up_black_24"
+                android:tint="@color/like"/>
         </LinearLayout>
 
         <LinearLayout
@@ -219,10 +222,13 @@
                 android:layout_height="wrap_content"
                 style="@style/Widget.Design.FloatingActionButton"
                 android:contentDescription="@string/bouton_int_ress"
+                app:fabCustomSize="52dp"
+
                 android:backgroundTint="@android:color/white"
                 app:borderWidth="0dp"
                 android:padding="10dp"
-                app:srcCompat="@drawable/round_add_24" />
+                app:srcCompat="@drawable/round_add_black_24"
+                android:tint="@color/gray"/>
         </LinearLayout>
 
         <LinearLayout
@@ -239,10 +245,13 @@
                 android:layout_height="wrap_content"
                 style="@style/Widget.Design.FloatingActionButton"
                 android:contentDescription="@string/bouton_passer"
+                app:fabCustomSize="52dp"
+
                 android:backgroundTint="@android:color/white"
                 app:borderWidth="0dp"
                 android:padding="10dp"
-                app:srcCompat="@drawable/round_clear_24" />
+                app:srcCompat="@drawable/round_clear_black_24"
+                android:tint="@color/gray"/>
         </LinearLayout>
 
 
@@ -259,10 +268,13 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/bouton_j_aime_pas"
                 android:backgroundTint="@android:color/white"
+                app:fabCustomSize="52dp"
+
                 style="@style/Widget.Design.FloatingActionButton"
                 app:borderWidth="0dp"
                 android:padding="10dp"
-                app:srcCompat="@drawable/round_thumb_down_24" />
+                app:srcCompat="@drawable/round_thumb_down_black_24"
+                android:tint="@color/dislike"/>
 
         </LinearLayout>
 

@@ -198,11 +198,13 @@
                 style="@style/Widget.Design.FloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:fabCustomSize="52dp"
                 android:backgroundTint="@android:color/white"
                 android:contentDescription="@string/bouton_j_aime"
                 android:padding="10dp"
                 app:borderWidth="0dp"
-                app:srcCompat="@drawable/round_thumb_up_24" />
+                app:srcCompat="@drawable/round_thumb_up_black_24"
+                android:tint="@color/like"/>
         </LinearLayout>
 
 
@@ -221,9 +223,12 @@
                 style="@style/Widget.Design.FloatingActionButton"
                 android:contentDescription="@string/bouton_passer"
                 android:backgroundTint="@android:color/white"
+                app:fabCustomSize="52dp"
+
                 app:borderWidth="0dp"
                 android:padding="10dp"
-                app:srcCompat="@drawable/round_clear_24" />
+                app:srcCompat="@drawable/round_clear_black_24"
+                android:tint="@color/gray"/>
         </LinearLayout>
 
 
@@ -241,9 +246,11 @@
                 android:contentDescription="@string/bouton_j_aime_pas"
                 android:backgroundTint="@android:color/white"
                 style="@style/Widget.Design.FloatingActionButton"
+                app:fabCustomSize="52dp"
                 app:borderWidth="0dp"
                 android:padding="10dp"
-                app:srcCompat="@drawable/round_thumb_down_24" />
+                app:srcCompat="@drawable/round_thumb_down_black_24"
+                android:tint="@color/dislike"/>
 
         </LinearLayout>
 
